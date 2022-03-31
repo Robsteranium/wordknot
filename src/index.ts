@@ -8,7 +8,7 @@ import { columns, dropField, newPoints, LetterGenerator } from './lib';
 import { endianness } from "os";
 
 const W = 600;//document.body.clientWidth;
-const H = W + 100;//document.body.clientHeight;
+const H = W + 200;//document.body.clientHeight;
 
 const board_length = 5;
 const cell_width = W/board_length;
@@ -46,6 +46,7 @@ const generateBoard = (board_length) => {
 
 let board: Cell[] = generateBoard(board_length);
 
+let points = 0;
 
 // Render
 
@@ -89,6 +90,21 @@ const word = (cells) => {
       baseline: "top"
     }
   ))
+}
+
+const score = (points) => {
+  return(
+    text(
+      [W/2,W+100],
+      points,
+      {
+        font: "60px Roboto Black",
+        fill: "grey",
+        align: "center",
+        baseline: "top"
+      }
+    )
+  )
 }
 
 // Animation
@@ -211,6 +227,7 @@ const knotEnder = (checkWord) => {
     const word = knot.map(c => c.letter).join('')
     if (checkWord(word)) {
       board = removeKnot(board, knot)
+      points += Math.pow(word.length,3)
     }
     board = drop(board)
     board = board.concat(replace(board))
@@ -236,7 +253,8 @@ async function mount() {
     },
       step(),
       ...letters(board),
-      word(knot)//,
+      word(knot),
+      score(points),
       //text([50, 150], tick, { font: "80px Roboto Black", fill: "red"})
     ]);
   });
