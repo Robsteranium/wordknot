@@ -5,6 +5,7 @@ import * as tx from "@thi.ng/transducers";
 import { equals2 } from "@thi.ng/vectors/equals"
 import type { Vec } from "@thi.ng/vectors";
 import { columns, dropField, newPoints, LetterGenerator } from './lib';
+import { endianness } from "os";
 
 const W = 600;//document.body.clientWidth;
 const H = W + 100;//document.body.clientHeight;
@@ -167,6 +168,9 @@ const drop = (board) => {
   return(newBoard)
 }
 
+const wordChecker = (wordlist) => {
+  return((word) => wordlist.indexOf('\n' + word + '\n') > 0)
+}
 
 // Interaction
 
@@ -199,30 +203,47 @@ const startKnot = () => {
   knot = []
 };
 
-const endKnot = () => {
-  mouseDown = false;
+const knotEnder = (checkWord) => {
+  return(function() {
+    mouseDown = false;
   
-  // remove word and drop down replacements
-  board = removeKnot(board, knot)
-  board = drop(board)
-  board = board.concat(replace(board))
-  knot = []
+    // remove word and drop down replacements
+    const word = knot.map(c => c.letter).join('')
+    if (checkWord(word)) {
+      board = removeKnot(board, knot)
+    }
+    board = drop(board)
+    board = board.concat(replace(board))
+    knot = []  
+  })
 };
 
 
 // Mount
 
-start(() => {
-  return([canvas, {
-    width: W,
-    height: H ,
-    onmousemove: updateMouse,
-    onmousedown: startKnot,
-    onmouseup: endKnot
-  },
-    step(),
-    ...letters(board),
-    word(knot)//,
-    //text([50, 150], tick, { font: "80px Roboto Black", fill: "red"})
-  ]);
-});
+async function mount() {
+  const words = await fetch('words.txt').then(response => response.text())
+  const checkWord = wordChecker(words)
+  const endKnot = knotEnder(checkWord)
+
+  start(() => {
+    return([canvas, {
+      width: W,
+      height: H ,
+      onmousemove: updateMouse,
+      onmousedown: startKnot,
+      onmouseup: endKnot
+    },
+      step(),
+      ...letters(board),
+      word(knot)//,
+      //text([50, 150], tick, { font: "80px Roboto Black", fill: "red"})
+    ]);
+  });
+}
+
+mount()
+
+// fetch('headwords.txt')
+//   .then(response => response.text())
+//   .then(data => console.log(data))
