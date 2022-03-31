@@ -4,7 +4,7 @@ import { text, circle } from "@thi.ng/geom";
 import * as tx from "@thi.ng/transducers";
 import { equals2 } from "@thi.ng/vectors/equals"
 import type { Vec } from "@thi.ng/vectors";
-import { columns, dropField, newPoints } from './lib';
+import { columns, dropField, newPoints, LetterGenerator } from './lib';
 
 const W = 600;//document.body.clientWidth;
 const H = W + 100;//document.body.clientHeight;
@@ -25,11 +25,10 @@ type Cell = {
 let knot: Cell[] = [];
 let mouseDown = false;
 
-const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 65));
+const letterGenerator = new LetterGenerator;
 
 const randomLetter = () => {
-  const n = (Math.random() * alphabet.length) | 0
-  return(alphabet[n])
+  return(letterGenerator.generate())
 }
 
 const generateBoard = (board_length) => {

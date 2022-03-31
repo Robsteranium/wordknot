@@ -37,3 +37,38 @@ export const newPoints = (board, ncol, nrow) => {
 
   return(points)
 }
+
+export const calculateProbability = (obj) => {
+  let total = obj.values.reduce((prev,curr)=> prev+curr,0)
+  return(Object.fromEntries(obj.entries.map(([k, v]) => [k, v/total])))
+}
+
+
+export class LetterGenerator {
+  letters: string[];
+  cumulativeFrequencies: number[];
+  cumulativeProbabilities: number[];
+
+  static letterFrequency = {
+    "a": 8.34, "b": 1.54, "c": 2.73, "d": 4.14, "e": 12.6, "f": 2.03, "g": 1.92, "h": 6.11, "i": 6.71,
+    "j": 0.23, "k": 0.87, "l": 4.24, "m": 2.53, "n": 6.8, "o": 7.7, "p": 1.66, "q": 0.09, "r": 5.68,
+    "s": 6.11, "t": 9.37, "u": 2.85, "v": 1.06, "w": 2.34, "x": 0.2, "y": 2.04, "z": 0.06
+  }
+
+  constructor() {
+    this.letters = Object.keys(LetterGenerator.letterFrequency)
+    this.cumulativeFrequencies = Object.values(LetterGenerator.letterFrequency).reduce((sums: number[], val: number): number[] => {
+      const lastVal = sums.slice(-1)[0] | 0
+      sums.push(val+lastVal)
+      return(sums)
+    }, [])
+    const totalFrequency = this.cumulativeFrequencies.slice(-1)[0]
+    this.cumulativeProbabilities = this.cumulativeFrequencies.map(val => val/totalFrequency)
+  }
+
+  generate() {
+    const rnd = Math.random()
+    const idx = this.cumulativeProbabilities.filter(val => rnd > val).length
+    return(this.letters[idx])
+  }
+}
