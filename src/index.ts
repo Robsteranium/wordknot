@@ -112,7 +112,7 @@ const score = (points) => {
 // Animation
 
 let tick = 0;
-let gravity = 0.01; // cells per tick, per tick
+let gravity = 0.02; // cells per tick, per tick
 let restitution = 0.6;
 let negligible_bounce_velocity = 0.01;
 
