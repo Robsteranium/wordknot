@@ -5,10 +5,12 @@ import * as tx from "@thi.ng/transducers";
 import { equals2 } from "@thi.ng/vectors/equals"
 import type { Vec } from "@thi.ng/vectors";
 import { columns, dropField, newPoints, LetterGenerator } from './lib';
-import { endianness } from "os";
 
-const W = 600;//document.body.clientWidth;
-const H = W + 200;//document.body.clientHeight;
+// const W = 600;
+// const H = W + 200;
+
+const W = document.body.clientWidth;
+const H = document.body.clientHeight;
 
 const board_length = 5;
 const cell_width = W/board_length;
