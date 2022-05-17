@@ -220,7 +220,8 @@ const updateTouch = (e: TouchEvent) => {
   // https://github.com/w3c/touch-events/issues/62
   // https://stackoverflow.com/questions/17130940/retrieve-the-same-offsetx-on-touch-like-mouse-event
   const touch = e.targetTouches[0] // only care about one finger
-  var canvasBounds = e.target.getBoundingClientRect();
+  const target = e.target as HTMLElement;
+  var canvasBounds = target.getBoundingClientRect();
   var x = touch.clientX - canvasBounds.x;
   var y = touch.clientY - canvasBounds.y;
   const cell = currentCell([x, y]);

@@ -1,6 +1,9 @@
 import * as tx from "@thi.ng/transducers";
 
-export const columns = (board, ncol, nrow): [string | undefined] => {
+type Letter = string | undefined;
+type Column = Letter[];
+
+export const columns = (board, ncol, nrow): Column[] => {
   let cols = [...Array(ncol)].map(_ => [...Array(nrow)]);
   board.forEach(cell => {
     cols[cell.p[0]][cell.p[1]] = cell.letter
@@ -32,8 +35,8 @@ export const dropField = (board, ncol, nrow) => {
 
 export const newPoints = (board, ncol, nrow) => {
   const cols = columns(board, ncol, nrow)
-  const replacementCounts = cols.map(col => col.map(val => val === undefined).reduce((sum, val) => sum+=val))
-  const points = replacementCounts.map((count, col) => [...tx.range(0,count)].map(depth => [col,depth]))
+  const replacementCounts = cols.map(col => col.map(val => val === undefined).reduce((sum, val) => sum += +val, 0))
+  const points = replacementCounts.map((count, col) => [...tx.range(0, count)].map(depth => [col,depth]))
 
   return(points)
 }
@@ -42,7 +45,6 @@ export const calculateProbability = (obj) => {
   let total = obj.values.reduce((prev,curr)=> prev+curr,0)
   return(Object.fromEntries(obj.entries.map(([k, v]) => [k, v/total])))
 }
-
 
 export class LetterGenerator {
   letters: string[];
