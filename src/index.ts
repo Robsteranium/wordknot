@@ -4,7 +4,7 @@ import { text, circle } from "@thi.ng/geom";
 import * as tx from "@thi.ng/transducers";
 import { equals2 } from "@thi.ng/vectors/equals"
 import type { Vec } from "@thi.ng/vectors";
-import { columns, dropField, newPoints, LetterGenerator } from './lib';
+import { dropField, newPoints, LetterGenerator } from './lib';
 
 // const W = 600;
 // const H = W + 200;

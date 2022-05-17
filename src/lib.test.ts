@@ -1,4 +1,3 @@
-import { hasUncaughtExceptionCaptureCallback } from 'process';
 import { columns, dropField, newPoints } from './lib';
 
 
@@ -69,3 +68,4 @@ test('replacements', () => {
 // test('cumulativeSum', () => {
 //   expect(cumulativeSum([1,2,3])).toEqual([1,3,6])
 // })
+
