@@ -49,6 +49,8 @@ let board: Cell[] = generateBoard(board_length);
 
 let points = 0;
 
+let longest: String = "";
+
 // Render
 
 const coordinates = ([x,y]) => {
@@ -100,6 +102,21 @@ const score = (points) => {
       points,
       {
         font: "60px Roboto",
+        fill: "grey",
+        align: "center",
+        baseline: "top"
+      }
+    )
+  )
+}
+
+const longestWord = (word) => {
+  return(
+    text(
+      [W/2, W+150],
+      word,
+      {
+        font: "40px Roboto",
         fill: "grey",
         align: "center",
         baseline: "top"
@@ -189,6 +206,10 @@ const wordChecker = (wordlist) => {
   return((word) => wordlist.indexOf('\n' + word + '\n') > 0)
 }
 
+const longerWord = (a, b) => {
+  return(a.length >= b.length ? a : b)
+}
+
 // Interaction
 
 const currentCell = (p: Vec): Cell =>  {
@@ -242,6 +263,7 @@ const knotEnder = (checkWord) => {
     const word = knot.map(c => c.letter).join('')
     if (checkWord(word)) {
       board = removeKnot(board, knot)
+      longest = longerWord(word, longest)
       points += Math.pow(word.length,3)
     }
     board = drop(board)
@@ -273,6 +295,7 @@ async function mount() {
       ...letters(board),
       word(knot),
       score(points),
+      longestWord(longest)
       //text([50, 150], tick, { font: "80px Roboto Black", fill: "red"})
     ]);
   });
