@@ -34,7 +34,7 @@ const randomLetter = () => {
 }
 
 const generateBoard = (board_length) => {
-  return([...tx.range2d(board_length,board_length) ].map(([x,y]) => {
+  return([...tx.range2d(board_length, board_length)].map(([x,y]) => {
     return({
       p: [x,y],
       letter: randomLetter(),
@@ -69,7 +69,7 @@ const letters = (board) => {
       return([
         circle(position, circleRadius, { fill: circleColour }),
         text(position, cell.letter, { 
-          font: "80px Roboto Black", 
+          font: `${cell_width/ratio}px Roboto`,
           fill: "black",
           baseline: "middle",
           align: "center"
@@ -85,7 +85,7 @@ const word = (cells) => {
     [W/2,W+25],
     label,
     {
-      font: "80px Roboto Black",
+      font: "80px Roboto",
       fill: "black",
       align: "center",
       baseline: "top"
@@ -99,7 +99,7 @@ const score = (points) => {
       [W/2,W+100],
       points,
       {
-        font: "60px Roboto Black",
+        font: "60px Roboto",
         fill: "grey",
         align: "center",
         baseline: "top"
