@@ -6,11 +6,10 @@ import { equals2 } from "@thi.ng/vectors/equals"
 import type { Vec } from "@thi.ng/vectors";
 import { dropField, newPoints, LetterGenerator } from './lib';
 
-// const W = 600;
-// const H = W + 200;
-
-const W = document.body.clientWidth;
-const H = document.body.clientHeight;
+const maxWidth = document.body.clientWidth;
+const maxHeight = document.body.clientHeight;
+const ratio = 4/3;
+const [W,H] = maxHeight > maxWidth ? [maxWidth, maxWidth*ratio] : [maxHeight/ratio, maxHeight]
 
 const board_length = 5;
 const cell_width = W/board_length;
