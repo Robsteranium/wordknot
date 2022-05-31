@@ -11,7 +11,7 @@ const maxHeight = document.body.clientHeight;
 const ratio = 4/3;
 const [W,H] = maxHeight > maxWidth ? [maxWidth, maxWidth*ratio] : [maxHeight/ratio, maxHeight]
 
-const board_length = 5;
+const board_length = 6;
 const cell_width = W/board_length;
 const circleRadiusProportion = 1/2;
 const circleRadius = cell_width*circleRadiusProportion;
