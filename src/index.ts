@@ -71,7 +71,7 @@ const letters = (board) => {
       return([
         circle(position, circleRadius, { fill: circleColour }),
         text(position, cell.letter, { 
-          font: `${cell_width/ratio}px Roboto`,
+          font: `${cell_width/4*3}px Roboto`,
           fill: "black",
           baseline: "middle",
           align: "center"
@@ -81,13 +81,15 @@ const letters = (board) => {
   )
 }
 
+const margin = cell_width/8;
+const wordHeight = cell_width * 0.6;
 const word = (cells) => {
   const label = cells.map(c => c.letter).join('');
   return(text(
-    [W/2,W+25],
+    [W/2,W+margin],
     label,
     {
-      font: "80px Roboto",
+      font: `${wordHeight}px Roboto`,
       fill: "black",
       align: "center",
       baseline: "top"
@@ -95,13 +97,14 @@ const word = (cells) => {
   ))
 }
 
+const scoreHeight = cell_width * 0.5;
 const score = (points) => {
   return(
     text(
-      [W/2,W+100],
+      [W/2,W+margin+wordHeight+margin],
       points,
       {
-        font: "60px Roboto",
+        font: `${scoreHeight}px Roboto`,
         fill: "grey",
         align: "center",
         baseline: "top"
@@ -110,13 +113,14 @@ const score = (points) => {
   )
 }
 
+const longestWordHeight = cell_width * 0.5;
 const longestWord = (word) => {
   return(
     text(
-      [W/2, W+150],
+      [W/2, W+margin+wordHeight+margin+scoreHeight+margin],
       word,
       {
-        font: "40px Roboto",
+        font: `${longestWordHeight}px Roboto`,
         fill: "grey",
         align: "center",
         baseline: "top"
